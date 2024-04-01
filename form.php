@@ -49,11 +49,13 @@
 include 'db.php';
 if(isset($_POST['submit'])){
     $email  = $_POST['email'];
-    $mail = password_hash($email,PASSWORD_BCRYPT);
-    $password = $_POST['password'];
-    $pass = password_hash($password,PASSWORD_DEFAULT);
+            // $mail = password_hash($email,PASSWORD_BCRYPT);
+            $mail = $email;
+            $password = $_POST['password'];
+            // $pass = password_hash($password,PASSWORD_DEFAULT);
+            $pass = $password;
 
-    $sql = "INSERT INTO `datas` (email, password) VALUES ('$mail', '$pass')";
+    $sql = "INSERT INTO `data` (email, password) VALUES ('$mail', '$pass')";
     $result =mysqli_query($con,$sql);
     if($result){
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -62,7 +64,7 @@ if(isset($_POST['submit'])){
   </div>';
   
     }
-    header("Location:form.php");
+    header("Location:table.php");
     exit;
 
 }
