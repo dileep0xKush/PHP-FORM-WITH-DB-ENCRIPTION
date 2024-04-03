@@ -1,3 +1,23 @@
+<?php
+
+include 'db.php';
+
+if (isset($_POST['submit'])) {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "INSERT INTO `data` (`email`, `password`) VALUES ('$email', '$password')";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        header("Location:table.php");
+        exit;
+    }
+}
+
+?>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -44,48 +64,27 @@
     </div>
   </div>
 </nav>
-<div class="container">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Email</th>
-      <th scope="col">Password</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
 
-  <?php
-include 'db.php';
-$data = "SELECT * FROM `data`";
-$result = mysqli_query($con, $data);
+<div class="container my-3">
 
-if ($result) {
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    ?>
-  <tbody>
-    <?php
-    foreach ($rows as $item) {
-        ?>
-    <tr>
-      <th scope="row"><?php echo $item['id']; ?></th>
-      <td><?php echo $item['email']; ?></td>
-      <td><?php echo $item['password']; ?></td>
-      <th>
-      <a href="edit.php?id=<?php echo $item['id']; ?>" class="btn btn-primary">Edit</a>
+<form method="POST">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
 
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
 
-      <a href="edit/<?php echo $item['id']; ?>" class="btn btn-danger">Delete</a>
-      </th>
-    </tr>
-    <?php
-}
-    ?>
-  </tbody>
-  <?php
-} else {
-    echo "Error executing the query: " . mysqli_error($con);
-}
-?>
-</table>
+  </div>
+  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+</form>
+
 </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>
